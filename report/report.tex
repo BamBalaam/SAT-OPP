@@ -7,18 +7,19 @@
 \usepackage{float}
 \usepackage{afterpage}
 \usepackage{amsmath}
-\usepackage{graphicx}
+\usepackage{amsfonts}
 \usepackage{tabularx}
 \usepackage{csquotes}
 \usepackage{fullpage}
 \usepackage{pdfpages}
 \usepackage{listings}
 \usepackage{color}
-
 \usepackage{listings}
 \usepackage{mdframed}
 \usepackage{color}
 \usepackage{pdflscape}
+\usepackage{graphicx}
+\graphicspath{ {images/} }
 
 \definecolor{mygreen}{rgb}{0,0.6,0}
 \definecolor{mygray}{rgb}{0.5,0.5,0.5}
@@ -112,9 +113,31 @@
 
 \section{Énoncé}
 
+Soit la largeur une dimension verticale et la longueur une dimension horizontale.
+
+Soit R un rectangle de largeur et longueur $n, m \in \mathbb{N}_{>0}$
+
+Soit $\{r_1,\cdots,r_k\}$ un ensemble de k rectangles, chacun plus petit que R.
+
+Soient $\mathcal{X}$ et $\mathcal{Y}$ deux fonctions qui donnent la longueur et la largeur, respectivement, de chaque rectangle (contrairement à ce qui est dit dans l'énoncé, puisqu'une légère erreur s'est glissée dedans).
+
 \section{Questions}
 
 \subsection{Question 1: Formalisation des contraintes que doit satisfaire $\mu$}
+
+Les contraintes sont les suivantes: 
+
+\textbf{Les rectangles doivent se trouver à l'intérieur du rectangle R}
+
+Soit $\mu(i) = (a,b)$
+
+$\forall r_i \{r_1,r_2,\ldots,r_k\} : (a \geq 0) \land (b \geq 0) \land (a+\mathcal{X}(i) \leq m) \land (b + \mathcal{Y}(i) \leq n)$ 
+
+\textbf{Les rectangles ne peuvent pas se superposer}
+
+Soit $\mu(i) = (a,b)$ et $\mu(j) = (c,d)$
+
+$\forall r_i,r_j \in \{r_1,r_2,\ldots,r_k\} : (a + \mathcal{X}(i) \leq c) \lor (c + \mathcal{X}(j) \leq a) \lor (b + \mathcal{Y}(i) \leq d) \lor (d + \mathcal{Y}(j) \leq b)$
 
 \subsection{Question 2: Construction d'une formule en FNC telle que celle-ci est SAT ssi il existe $\mu$ correcte}
 
@@ -126,13 +149,36 @@
 
 \subsection{Question 6: Ajout d'une troisième dimension}
 
+\newpage
+
 \subsection{Question 7: Contrainte - ne pas faire flotter des pavés droits dans l'espace}
+
+Vu que cela n'était pas défini dans l'énoncé, nous avons assumé que la base d'un pavé droit W posé sur un pavé droit V doit être contenu sur le sommet du pavé droit V. C'est à dire, graphiquement, si l'on imagine des pavés droits vu de coté:
+
+\begin{figure}[htb!]
+\centering
+\includegraphics[scale=0.8]{possible}
+\end{figure}
+
+Nous avons décidé de le définir comme ceci car, d'un point de vue réaliste, il est possible qu'un pavé droit posé sur un autre le dépasse légèrement niveau taille, mais à partir de quand est-ce que l'on considère qu'il est ``trop'' grand et flotte/tombe?
+
+Donc, formellement: 
+
+Soit $\mu(v) = (a,b,c)$ et $\mu(w) = (d,e,f)$
+
+$(f = c + \mathcal{Z}(v)) \land (d \geq a) \land (d+\mathcal{X}(w) \leq a+\mathcal{X}(v)) \land (e \geq b) \land(e+\mathcal{Y}(w) \leq b+\mathcal{Y}(v))$ 
 
 \section{Questions bonus}
 
 \subsection{Question 8: Pivotage d'un des rectangles}
 
 \subsection{Question 9: Introduction d'un minimum de contact entre les rectangles et les bords de R}
+
+$$ \sum_{\substack{\forall i \in k : a(i) = 0\\
+                \forall i \in k : b(i) = 0\\
+                \forall i \in k : a(i)+ X(i) = n\\
+                \forall i \in k : b(i)+ Y(i) = m }}
+SOMETHING $$
 
 \subsection{Question 10: Maximisation de ce contact avec MAX-SAT}
 
