@@ -141,6 +141,14 @@ $\forall r_i,r_j \in \{r_1,r_2,\ldots,r_k\} : (a + \mathcal{X}(i) \leq c) \lor (
 
 \subsection{Question 2: Construction d'une formule en FNC telle que celle-ci est SAT ssi il existe $\mu$ correcte}
 
+$C_1 : \bigwedge\limits_{i \in k} (a \geq 0) \land (b \geq 0) \land (a+\mathcal{X}(i) \leq m) \land (b + \mathcal{Y}(i) \leq n)$
+
+$C_2 : {\bigwedge\limits_{i \in k} \bigwedge\limits_{j \in k}}_{i\neq j} (a + \mathcal{X}(i) \leq c) \lor (c + \mathcal{X}(j) \leq a) \lor (b + \mathcal{Y}(i) \leq d) \lor (d + \mathcal{Y}(j) \leq b)$
+
+\begin{center}
+$FNC: C_1 \wedge C_2$
+\end{center}
+
 \subsection{Question 3: Implémentation et tests sur des exemples simples}
 
 \subsection{Question 4: Si R est un carré, trouver la plus petite dimension de celui-ci admettant une solution pour des rectangles donnés}
