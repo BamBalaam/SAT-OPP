@@ -37,9 +37,9 @@ int main() {
     for (size_t a = 0; a < M - grid.getX(k); a++) {
       for (size_t b = 0; b < N - grid.getY(k); b++) {
         for (size_t l = 0; l < K; l++) {
-          for (size_t e = a; e < a + grid.getX(k); e++) {
-            for (size_t f = b; f < b + grid.getY(k); f++) {
-              if (k != l) {
+          if (k != l) {
+            for (size_t e = a; e < a + grid.getX(k); e++) {
+              for (size_t f = b; f < b + grid.getY(k); f++) {
                 s.addBinary(~Lit(prop[a][b][k]), ~Lit(prop[e][f][l]));
               }
             }
