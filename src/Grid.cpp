@@ -1,10 +1,11 @@
+#include <cstddef>
 #include <iostream>
 #include <string>
 #include <vector>
 
 class Grid {
 private:
-  int k, m, n;
+  size_t k, m, n;
   std::vector<int> x, y;
 
 public:
@@ -14,10 +15,10 @@ public:
   void init_from_stdin() {
     int i = 0, addX, addY;
     std::cin >> k;
-    std::cin >> m;
     std::cin >> n;
+    std::cin >> m;
     while (i < k) {
-      std::cin >> i >> addX >> addY;
+      std::cin >> i >> addY >> addX;
       x.push_back(addX);
       y.push_back(addY);
     }
@@ -27,9 +28,13 @@ public:
 
   std::vector<int> const &getY() const { return y; }
 
-  int const getK() const { return k; }
+  int const getX(size_t i) const { return x[i]; }
 
-  int const getM() const { return m; }
+  int const getY(size_t j) const { return x[j]; }
 
-  int const getN() const { return n; }
+  size_t const getK() const { return k; }
+
+  size_t const getM() const { return m; }
+
+  size_t const getN() const { return n; }
 };
