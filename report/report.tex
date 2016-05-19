@@ -163,21 +163,21 @@ $$C_1 : \bigwedge_{1 \leq i \leq k} ( \bigvee_{0 \leq a < m - X(i)} \bigvee_{0 \
 
 Pour \eqref{eq:cont6}:
 
-Soit e tel que $0 \leq e < m - X(i)$
+Soit e tel que $a \leq e < a + X(i)$
 
-Soit f tel que $0 \leq f < n - Y(i)$
+Soit f tel que $b \leq f < b + Y(i)$
 
-$$prop(a,b,i) \Rightarrow \neg prop(a+e,b,j)$$
+$$prop(a,b,i) \Rightarrow \neg prop(e,b,j)$$
 
-$$prop(a,b,i) \Rightarrow \neg prop(a,b+f,j)$$
+$$prop(a,b,i) \Rightarrow \neg prop(a,f,j)$$
 
 Ces deux implications peuvent être traduites:
 
-$$\neg prop(a,b,i) \lor \neg prop(a+e,b,j)$$
+$$\neg prop(a,b,i) \lor \neg prop(e,b,j)$$
 
-$$\neg prop(a,b,i) \lor \neg prop(a,b+f,j)$$
+$$\neg prop(a,b,i) \lor \neg prop(a,f,j)$$
 
-$$C_{2} : \bigwedge_{\substack{1 \leq i \leq k \\ 1 \leq j \leq k \\ i \neq j}} \neg prop(a,b,i) \lor \neg prop(a+e,b+f,j)$$
+$$C_{2} : \bigwedge_{\substack{1 \leq i \leq k \\ 1 \leq j \leq k \\ i \neq j}} \neg prop(a,b,i) \lor \neg prop(e,f,j)$$
 
 
 \begin{center}
