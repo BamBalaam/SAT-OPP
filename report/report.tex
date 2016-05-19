@@ -158,7 +158,7 @@ Soit prop un cube de propositions de dimensions n,m et k tel que prop(a,b,i) est
 
 Pour \eqref{eq:cont1} et \eqref{eq:cont5}: 
 
-$$C_1 : \bigwedge_{1 \leq i \leq k} ( \bigvee_{0 \leq a < m - X(i)} \bigvee_{0 \leq b < n - Y(i)} prop(a,b,i)) $$
+$$C_1 : \bigwedge_{1 \leq i \leq k} ( \bigvee_{0 \leq a < m - X(i)}\;\; \bigvee_{0 \leq b < n - Y(i)} prop(a,b,i)) $$
 
 
 Pour \eqref{eq:cont6}:
@@ -191,6 +191,13 @@ $$FNC: C_1 \wedge C_2$$
 \subsection{Question 5: Si R est un carré et n un entier donné, trouver la plus petite dimension de R admettant une solution pour des carrés de taille $i \times i$ pour tout $i \leq n$}
 
 \subsection{Question 6: Ajout d'une troisième dimension}
+
+Soit g tel que $c \leq g < c + Z(i)$
+
+$$C_{1\_3D} : \bigwedge_{1 \leq i \leq k} ( \bigvee_{0 \leq a < m - X(i)}\;\; \bigvee_{0 \leq b < n - Y(i)}\;\; \bigvee_{0 \leq c < h - Z(i)} prop(a,b,c,i)) $$
+
+$$C_{2\_3D} : \bigwedge_{\substack{1 \leq i \leq k \\ 1 \leq j \leq k \\ i \neq j}} \neg prop(a,b,c,i) \lor \neg prop(e,f,g,j)$$
+
 
 \newpage
 
