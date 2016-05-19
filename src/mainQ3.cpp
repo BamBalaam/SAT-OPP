@@ -58,7 +58,16 @@ int main() {
   s.solve();
 
   if (s.okay()) {
-    std::cout << "Youpi" << std::endl;
+    int i = 1;
+    for (size_t m = 0; m < M; m++) {
+      for (size_t n = 0; n < N; n++) {
+        for (size_t k = 0; k < K; k++) {
+          if (s.model[prop[m][n][k]] == l_True) {
+            std::cout << i++ << '\t' << m << '\t' << n << std::endl;
+          }
+        }
+      }
+    }
   } else {
     std::cout << "Flute alors" << std::endl;
   }
