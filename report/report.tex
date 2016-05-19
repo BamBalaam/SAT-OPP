@@ -117,6 +117,8 @@ Soit la largeur une dimension verticale et la longueur une dimension horizontale
 
 Soit R un rectangle de largeur et longueur $n, m \in \mathbb{N}_{>0}$
 
+Soit Rec l'ensemble des petits rectangles à insérer dans R ( $\{ r_1, r_2, \ldots r_k \}$)
+
 Soit $\{r_1,\cdots,r_k\}$ un ensemble de k rectangles, chacun plus petit que R.
 
 Soient $\mathcal{X}$ et $\mathcal{Y}$ deux fonctions qui donnent la longueur et la largeur, respectivement, de chaque rectangle (contrairement à ce qui est dit dans l'énoncé, puisqu'une légère erreur s'est glissée dedans).
@@ -127,26 +129,59 @@ Soient $\mathcal{X}$ et $\mathcal{Y}$ deux fonctions qui donnent la longueur et 
 
 Les contraintes sont les suivantes: 
 
-\textbf{Les rectangles doivent se trouver à l'intérieur du rectangle R}
+\textbf{Les rectangles de Rec doivent tous être utilisés exactement une fois}
 
-Soit $\mu(i) = (a,b)$
+\begin{equation}
+\label{eq:cont1}
+\forall r_i \in Rec : \mu(i) = (a,b)
+\end{equation}
 
-$\forall r_i \{r_1,r_2,\ldots,r_k\} : (a \geq 0) \land (b \geq 0) \land (a+\mathcal{X}(i) \leq m) \land (b + \mathcal{Y}(i) \leq n)$ 
+\textbf{Les rectangles insérés doivent se trouver à l'intérieur du rectangle R}
 
-\textbf{Les rectangles ne peuvent pas se superposer}
+\begin{equation}
+\label{eq:cont5}
+\forall r_i \in Rec : (a \geq 0) \land (b \geq 0) \land (a+\mathcal{X}(i) \leq m) \land (b + \mathcal{Y}(i) \leq n)
+\end{equation}
+
+\textbf{Les rectangles insérés ne peuvent pas se superposer}
 
 Soit $\mu(i) = (a,b)$ et $\mu(j) = (c,d)$
 
-$\forall r_i,r_j \in \{r_1,r_2,\ldots,r_k\} : (a + \mathcal{X}(i) \leq c) \lor (c + \mathcal{X}(j) \leq a) \lor (b + \mathcal{Y}(i) \leq d) \lor (d + \mathcal{Y}(j) \leq b)$
+\begin{equation}
+\label{eq:cont6}
+\forall r_i,r_j \in Rec : (a + \mathcal{X}(i) \leq c) \lor (c + \mathcal{X}(j) \leq a) \lor (b + \mathcal{Y}(i) \leq d) \lor (d + \mathcal{Y}(j) \leq b)
+\end{equation}
 
 \subsection{Question 2: Construction d'une formule en FNC telle que celle-ci est SAT ssi il existe $\mu$ correcte}
 
-$C_1 : \bigwedge\limits_{i \in k} (a \geq 0) \land (b \geq 0) \land (a+\mathcal{X}(i) \leq m) \land (b + \mathcal{Y}(i) \leq n)$
+Soit prop un cube de propositions de dimensions n,m et k tel que prop(a,b,i) est vrai si le rectangle $r_i$ a pour coin inférieur gauche le point (a,b).
 
-$C_2 : {\bigwedge\limits_{i \in k} \bigwedge\limits_{j \in k}}_{i\neq j} (a + \mathcal{X}(i) \leq c) \lor (c + \mathcal{X}(j) \leq a) \lor (b + \mathcal{Y}(i) \leq d) \lor (d + \mathcal{Y}(j) \leq b)$
+Pour \eqref{eq:cont1} et \eqref{eq:cont5}: 
+
+$$C_1 : \bigwedge_{1 \leq i \leq k} ( \bigvee_{0 \leq a < m - X(i)} \bigvee_{0 \leq b < n - Y(i)} prop(a,b,i)) $$
+
+
+Pour \eqref{eq:cont6}:
+
+Soit e tel que $0 \leq e < m - X(i)$
+
+Soit f tel que $0 \leq f < n - Y(i)$
+
+$$prop(a,b,i) \Rightarrow \neg prop(a+e,b,j)$$
+
+$$prop(a,b,i) \Rightarrow \neg prop(a,b+f,j)$$
+
+Ces deux implications peuvent être traduites:
+
+$$\neg prop(a,b,i) \lor \neg prop(a+e,b,j)$$
+
+$$\neg prop(a,b,i) \lor \neg prop(a,b+f,j)$$
+
+$$C_{2} : \bigwedge_{\substack{1 \leq i \leq k \\ 1 \leq j \leq k \\ i \neq j}} \neg prop(a,b,i) \lor \neg prop(a+e,b+f,j)$$
+
 
 \begin{center}
-$FNC: C_1 \wedge C_2$
+$$FNC: C_1 \wedge C_2$$
 \end{center}
 
 \subsection{Question 3: Implémentation et tests sur des exemples simples}
