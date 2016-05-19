@@ -42,7 +42,7 @@ void run(Grid &grid, size_t size) {
           if (k != l) {
             for (size_t e = a; e < a + grid.getX(k); e++) {
               for (size_t f = b; f < b + grid.getY(k); f++) {
-                s.addBinary(~Lit(prop[a][b][k]), ~Lit(prop[e][f][l]));
+                s.addBinary(~Lit(prop[a][b][k]), Lit(prop[e][f][l]));
               }
             }
           }
