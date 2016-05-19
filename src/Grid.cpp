@@ -1,3 +1,4 @@
+#include <algorithm>
 #include <cstddef>
 #include <iostream>
 #include <string>
@@ -37,4 +38,13 @@ public:
   size_t const getM() const { return m; }
 
   size_t const getN() const { return n; }
+
+  void toSquare(size_t s) {
+    m = s;
+    n = s;
+  }
+
+  int maxX() const { return *std::max_element(std::begin(x), std::end(x)); }
+
+  int maxY() const { return *std::max_element(std::begin(y), std::end(y)); }
 };
