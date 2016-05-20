@@ -125,7 +125,7 @@ Soient $\mathcal{X}$ et $\mathcal{Y}$ deux fonctions qui donnent la largeur et l
 
 \subsection{Question 1: Formalisation des contraintes que doit satisfaire $\mu$}
 
-Les contraintes sont les suivantes: 
+Les contraintes sont les suivantes:
 
 \begin{enumerate}
 \item Unicité : chaque rectangle n'est utilisé qu'une seule fois
@@ -136,11 +136,20 @@ Les contraintes sont les suivantes:
 
 Les traductions en langage mathématique sont les suivantes:
 
-NB: JE PENSE QU'IL FAUT EN RE-ECRIRE, NON?
-
 \textbf{Unicité}
 
-???
+\begin{equation}
+  \label{eq:unicite1}
+  \forall r_i, r_j \in Rec, \forall a \in (1..n), \forall b \in (1..m) : \mu(i) = (a, b) \land \mu(j) = (a, b) \Rightarrow i = j
+\end{equation}
+\begin{equation}
+  \label{eq:unicite2}
+  \forall r_i \in Rec, \forall a1, a2 \in (1..n), \forall b \in (1..m) : \mu(i) = (a1, b) \land \mu(i) = (a2, b) \Rightarrow a1 = a2
+\end{equation}
+\begin{equation}
+  \label{eq:unicite3}
+  \forall r_i \in Rec, \forall a \in (1..n), \forall b1, b2 \in (1..m) : \mu(i) = (a, b1) \land \mu(i) = (a, b2) \Rightarrow b1 = b2
+\end{equation}
 
 \textbf{Existence}
 
@@ -263,11 +272,11 @@ Vu que cela n'était pas défini dans l'énoncé, nous avons assumé que la base
 
 Nous avons décidé de le définir comme ceci car, d'un point de vue réaliste, il est possible qu'un pavé droit posé sur un autre le dépasse légèrement niveau taille, mais à partir de quand est-ce que l'on considère qu'il est ``trop'' grand et flotte/tombe?
 
-Donc, formellement: 
+Donc, formellement:
 
 Soit $\mu(v) = (a,b,c)$ et $\mu(w) = (d,e,f)$
 
-$(f = c + \mathcal{Z}(v)) \land (d \geq a) \land (d+\mathcal{X}(w) \leq a+\mathcal{X}(v)) \land (e \geq b) \land(e+\mathcal{Y}(w) \leq b+\mathcal{Y}(v))$ 
+$(f = c + \mathcal{Z}(v)) \land (d \geq a) \land (d+\mathcal{X}(w) \leq a+\mathcal{X}(v)) \land (e \geq b) \land(e+\mathcal{Y}(w) \leq b+\mathcal{Y}(v))$
 
 \section{Conclusion}
 
