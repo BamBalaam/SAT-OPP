@@ -3,81 +3,70 @@
 #include <cstddef>
 #include <iostream>
 
-int main() {
-  Grid grid;
-  grid.init_from_stdin();
-  size_t M = grid.getM(), N = grid.getN(), K = grid.getK();
-  Var prop[M][N][K];
-  vec<Lit> lits;
-
-  std::cout << "M: " << M << ", N: " << N << std::endl;
-
-  for (auto it = grid.getX().begin(); it < grid.getX().end(); it++) {
-    std::cout << *it << " ";
-  }
-  std::cout << std::endl;
-
-  for (auto it = grid.getY().begin(); it < grid.getY().end(); it++) {
-    std::cout << *it << " ";
-  }
-  std::cout << std::endl;
+int main(int argc, char const *argv[]) {
+  Grid g;
+  g.init_from_stdin();
+  size_t K = g.getK(), N = g.getN(), M = g.getM();
 
   Solver s;
+  vec<Lit> lits;
 
-  // Initialize prop vector
-  for (size_t i = 0; i < M; i++) {
-    for (size_t j = 0; j < N; j++) {
-      for (size_t k = 0; k < K; k++) {
-        prop[i][j][k] = s.newVar();
+  // 3 dimensions : numéro du rectangle et coordonnées en largeur et longueur
+  Var prop[K][N][M];
+
+  for (size_t k = 0; k < K; k++) {
+    for (size_t a = 0; a < N; a++) {
+      for (size_t b = 0; b < M; b++) {
+        prop[k][a][b] = s.newVar();
       }
     }
   }
 
+  // Unicité : rectangle utilisé pas plus d'une fois
   for (size_t k = 0; k < K; k++) {
-    for (size_t a = 0; a < M; a++) {
-      for (size_t b = 0; b < N; b++) {
+    for (size_t a = 0; a < N; a++) {
+      for (size_t b = 0; b < M; b++) {
         for (size_t k2 = 0; k2 < K; k2++) {
           if (k != k2) {
-            s.addBinary(~Lit(prop[a][b][k]), ~Lit(prop[a][b][k2]));
+            s.addBinary(~Lit(prop[k][a][b]), ~Lit(prop[k2][a][b]));
           }
         }
-        for (size_t a2 = 0; a2 < M; a2++) {
+        for (size_t a2 = 0; a2 < N; a2++) {
           if (a != a2) {
-            s.addBinary(~Lit(prop[a][b][k]), ~Lit(prop[a2][b][k]));
+            s.addBinary(~Lit(prop[k][a][b]), ~Lit(prop[k][a2][b]));
           }
         }
-        for (size_t b2 = 0; b2 < N; b2++) {
+        for (size_t b2 = 0; b2 < M; b2++) {
           if (b != b2) {
-            s.addBinary(~Lit(prop[a][b][k]), ~Lit(prop[a][b2][k]));
+            s.addBinary(~Lit(prop[k][a][b]), ~Lit(prop[k][a][b2]));
           }
         }
       }
     }
   }
 
-  // First constraint: all rectangles used
+  // existence : tous les rectangles ajoutés
   for (size_t k = 0; k < K; k++) {
     lits.clear();
-    for (size_t a = 0; a < M - grid.getX(k) + 1; a++) {
-      for (size_t b = 0; b < N - grid.getY(k) + 1; b++) {
-        lits.push(Lit(prop[a][b][k]));
+    for (size_t a = 0; a < N; a++) {
+      for (size_t b = 0; b < M; b++) {
+        lits.push(Lit(prop[k][a][b]));
       }
     }
     s.addClause(lits);
   }
 
+  // chevauchement : les rectangles ne se chevauchent pas
   for (size_t k = 0; k < K; k++) {
-    for (size_t a = 0; a < M; a++) {
-      for (size_t b = 0; b < N; b++) {
-        if (a + grid.getX(k) - 1 < M && b + grid.getY(k) - 1 < N) {
-          for (size_t da = 0; da < grid.getX(k); da++) {
-            for (size_t db = 0; db < grid.getY(k); db++) {
+    for (size_t a = 0; a < N; a++) {
+      for (size_t b = 0; b < M; b++) {
+        if (a + g.getX(k) - 1 < N && b + g.getY(k) - 1 < M) {
+          for (size_t da = 0; da < g.getX(k); da++) {
+            for (size_t db = 0; db < g.getY(k); db++) {
               for (size_t k2 = 0; k2 < K; k2++) {
-                if ((da == 0 && db == 0) || k == k2) {
-                  continue;
-                } else {
-                  s.addBinary(~Lit(prop[a][b][k]),
-                              ~Lit(prop[a + da][b + db][k2]));
+                if (!(da == 0 && db == 0)) {
+                  s.addBinary(~Lit(prop[k][a][b]),
+                              ~Lit(prop[k2][a + da][b + db]));
                 }
               }
             }
@@ -87,45 +76,35 @@ int main() {
     }
   }
 
+  // dans les limites : les rectangles restent à l'intérieur du grand
   for (size_t k = 0; k < K; k++) {
-    for (size_t a = M - grid.getX(k) + 1; a < M; a++) {
-      for (size_t b = N - grid.getY(k) + 1; b < N; b++) {
-        s.addUnit(~Lit(prop[a][b][k]));
+    for (size_t a = N - g.getX(k) + 1; a < N; a++) {
+      for (size_t b = 0; b < M; b++) {
+        s.addUnit(~Lit(prop[k][a][b]));
+      }
+    }
+    for (size_t a = 0; a < N - g.getX(k) + 1; a++) {
+      for (size_t b = M - g.getY(k); b < M; b++) {
+        s.addUnit(~Lit(prop[k][a][b]));
       }
     }
   }
 
-  //// Second constraint : no overlapping
-  // for (size_t k = 0; k < K; k++) {
-  //  for (size_t a = 0; a <= M - grid.getX(k); a++) {
-  //    for (size_t b = 0; b <= N - grid.getY(k); b++) {
-  //      for (size_t l = 0; l < K; l++) {
-  //        if (k != l) {
-  //          for (size_t e = a; e < a + grid.getX(k); e++) {
-  //            for (size_t f = b; f < b + grid.getY(k); f++) {
-  //              s.addBinary(~Lit(prop[a][b][k]), ~Lit(prop[e][f][l]));
-  //            }
-  //          }
-  //        }
-  //      }
-  //    }
-  //  }
-  //}
-
   s.solve();
 
   if (s.okay()) {
+    std::cout << "SAT" << std::endl;
     for (size_t k = 0; k < K; k++) {
-      for (size_t m = 0; m < M; m++) {
-        for (size_t n = 0; n < N; n++) {
-          if (s.model[prop[m][n][k]] == l_True) {
+      for (size_t n = 0; n < N; n++) {
+        for (size_t m = 0; m < M; m++) {
+          if (s.model[prop[k][n][m]] == l_True) {
             std::cout << k + 1 << '\t' << m << '\t' << n << std::endl;
           }
         }
       }
     }
   } else {
-    std::cout << "Flute alors" << std::endl;
+    std::cout << "UNSAT" << std::endl;
   }
 
   return 0;
