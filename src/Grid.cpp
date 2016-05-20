@@ -19,7 +19,7 @@ public:
     std::cin >> n;
     std::cin >> m;
     while (i < k) {
-      std::cin >> i >> addY >> addX;
+      std::cin >> i >> addX >> addY;
       x.push_back(addX);
       y.push_back(addY);
     }
