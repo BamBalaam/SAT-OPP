@@ -210,6 +210,28 @@ $$FNC: C_1 \wedge C_2 \wedge C_3 \wedge C_4$$
 
 \subsection{Question 3: Implémentation et tests sur des exemples simples}
 
+Deux fichiers reflètent l'implémentation, ``Grid.cpp'' et ``mainQ3.cpp''. Grid parse les valeurs données à la main ou via un fichier et les stocke. Le main, lui, retranscrit les contraintes en code que miniSat peut utiliser pour construire le cube de propositions évoqué plus haut, puis cherche si une solution existe. Si une solution est trouvée, il affiche le mot ``SAT'' puis des variables correspondant à une telle solution (comme décrit dans l'énoncé). Si aucune solution est trouvée, il affiche ``UNSAT''.
+
+Pour tester le projet, il suffit de lancer les deux commandes suivantes:
+
+make Q3
+cat examples/<exemple à tester>.txt | ./a.out
+
+Nous avons donc testé les deux exemples donnés 
+\begin{figure}[htb!]
+\centering
+\includegraphics[scale=0.55]{SAT-Simple}
+\end{figure}
+
+Nous avons également testé un exemple plus complexe, nommé BENG06, pour lequel nous avons obtenu une réponse (affichée ici tronquée car la réponse comporte 40 lignes de données affichées).
+
+\begin{figure}[htb!]
+\centering
+\includegraphics[scale=0.5]{SAT-BENG06}
+\end{figure}
+
+\newpage
+
 \subsection{Question 4: Si R est un carré, trouver la plus petite dimension de celui-ci admettant une solution pour des rectangles donnés}
 
 Soit R de dimensions $s \times s$.
@@ -218,18 +240,15 @@ On incrémente depuis un s minimum qui est la plus grande largeur ou longueur du
 
 Une amélioration possible serait d'effectuer une recherche dichotomique entre ce s minimum et le s maximal possible qui serait la plus grande taille de tous les rectangles mis bout à bout sur la largeur ou longueur.
 
+La question 5 étant une variante de la 4 seulement dans le format de l'input, nous présentons qu'un seul exemple pour les deux, à voir dans la sous-section suivante.
+
 \subsection{Question 5: Si R est un carré et n un entier donné, trouver la plus petite dimension de R admettant une solution pour des carrés de taille $i \times i$ pour tout $i \leq n$}
 
 Même chose que pour la question 4, mais avec création des carrés à insérer de tailles contenues entre 1 et n.
 
 \subsection{Question 6: Ajout d'une troisième dimension}
 
-Soit g tel que $c \leq g < c + Z(i)$
-
-$$C_{1\_3D} : \bigwedge_{1 \leq i \leq k} ( \bigvee_{0 \leq a < m - X(i)}\;\; \bigvee_{0 \leq b < n - Y(i)}\;\; \bigvee_{0 \leq c < h - Z(i)} prop(a,b,c,i)) $$
-
-$$C_{2\_3D} : \bigwedge_{\substack{1 \leq i \leq k \\ 1 \leq j \leq k \\ i \neq j}} \neg prop(a,b,c,i) \lor \neg prop(e,f,g,j)$$
-
+Les contraintes n'ont pas changé dans le fond, elles reflètent simplement l'ajout d'une dimension en plu
 
 \newpage
 
@@ -249,5 +268,9 @@ Donc, formellement:
 Soit $\mu(v) = (a,b,c)$ et $\mu(w) = (d,e,f)$
 
 $(f = c + \mathcal{Z}(v)) \land (d \geq a) \land (d+\mathcal{X}(w) \leq a+\mathcal{X}(v)) \land (e \geq b) \land(e+\mathcal{Y}(w) \leq b+\mathcal{Y}(v))$ 
+
+\section{Conclusion}
+
+Nous avons trouvé ce projet fort intéressant (vraiment, c'est pas une blague), mais malheureusement, vu le nombre assez conséquent de projets à rendre nous n'avons pas pu y consacrer le temps qu'il serait requis pour nous lancer dans les questions bonus. Néanmoins, le plaisir de voir le projet fonctionner pour des exemples plus complexes a été le point fort de cette semaine chargée en travail et rebondissements.
 
 \end{document}
