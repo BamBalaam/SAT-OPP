@@ -298,10 +298,11 @@ Nous avons décidé de le définir comme ceci car, d'un point de vue réaliste, 
 
 Donc, formellement:
 
-Soit $\mu(v) = (a,b,c)$ et $\mu(w) = (d,e,f)$
+\begin{equation}
+  \forall r_i \in Rec: \mu(i) = (a, b, c) \land c > 1 \Rightarrow \exists r_j \in Rec, i \neq j : \mu(j) = (a, b, c-1)
+\end{equation}
 
-$(f = c + \mathcal{Z}(v)) \land (d \geq a) \land (d+\mathcal{X}(w) \leq a+\mathcal{X}(v)) \land (e \geq b) \land(e+\mathcal{Y}(w) \leq b+\mathcal{Y}(v))$
-
+Il n'aura cependant pas été possible d'utiliser cette formule, car les coordonnées (a, b, c) ne correspondent seulement qu'à l'arête inférieure gauche du rectangle, il était donc impossible de comparer $\mu(i)$ et $\mu(j)$.
 \section{Conclusion}
 
 Ce projet fut fort intéressant, à la fois d'un point de vue découverte d'un nouveau paradigme de programmation (à ce stade, nous ne considérons plus faire de l'impératif orienté objet), mais aussi d'un point de vue réflexion, la résolution nous ayant demandé pas mal de recherche et de calcul.
