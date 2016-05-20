@@ -95,7 +95,7 @@ int main(int argc, char const *argv[]) {
 
   // dans les limites : les rectangles restent à l'intérieur du grand
   for (size_t k = 0; k < K; k++) {
-    for (size_t a = N - g.getX(k); a < N; a++) {
+    for (size_t a = N - g.getX(k) + 1; a < N; a++) {
       for (size_t b = 0; b < M; b++) {
         for (size_t c = 0; c < H; c++) {
           s.addUnit(~Lit(prop[k][a][b][c]));
@@ -103,7 +103,7 @@ int main(int argc, char const *argv[]) {
       }
     }
     for (size_t a = 0; a < N; a++) {
-      for (size_t b = M - g.getY(k); b < M; b++) {
+      for (size_t b = M - g.getY(k) + 1; b < M; b++) {
         for (size_t c = 0; c < H; c++) {
           s.addUnit(~Lit(prop[k][a][b][c]));
         }
@@ -111,7 +111,7 @@ int main(int argc, char const *argv[]) {
     }
     for (size_t a = 0; a < N; a++) {
       for (size_t b = 0; b < M; b++) {
-        for (size_t c = H - g.getZ(k); c < H; c++) {
+        for (size_t c = H - g.getZ(k) + 1; c < H; c++) {
           s.addUnit(~Lit(prop[k][a][b][c]));
         }
       }
