@@ -11,6 +11,13 @@ private:
 
 public:
   Grid() = default;
+  explicit Grid(size_t i) {
+    k = i;
+    for (int j = 1; j <= i; ++j) {
+      x.push_back(j);
+      y.push_back(j);
+    }
+  }
   ~Grid() = default;
 
   void init_from_stdin() {
