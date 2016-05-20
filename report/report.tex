@@ -127,60 +127,86 @@ Soient $\mathcal{X}$ et $\mathcal{Y}$ deux fonctions qui donnent la largeur et l
 
 Les contraintes sont les suivantes: 
 
-\textbf{Les rectangles de Rec doivent tous être utilisés exactement une fois}
+\begin{enumerate}
+\item Unicité : chaque rectangle n'est utilisé qu'une seule fois
+\item Existence : tous les rectangles sont ajoutés dans R
+\item Chevauchement : les rectangles ne se superposent pas
+\item Limites : les rectangles ne dépassent pas les bords de R
+\end{enumerate}
+
+Les traductions en langage mathématique sont les suivantes:
+
+NB: JE PENSE QU'IL FAUT EN RE-ECRIRE, NON?
+
+\textbf{Unicité}
+
+???
+
+\textbf{Existence}
 
 \begin{equation}
-\label{eq:cont1}
+\label{eq:existence}
 \forall r_i \in Rec : \mu(i) = (a,b)
 \end{equation}
 
-\textbf{Les rectangles insérés doivent se trouver à l'intérieur du rectangle R}
-
-\begin{equation}
-\label{eq:cont5}
-\forall r_i \in Rec : (a \geq 0) \land (b \geq 0) \land (a \leq n - \mathcal{X}(i)) \land (b \leq m - \mathcal{Y}(i))
-\end{equation}
-
-\textbf{Les rectangles insérés ne peuvent pas se superposer}
+\textbf{Chevauchement}
 
 Soit $\mu(i) = (a,b)$ et $\mu(j) = (c,d)$
 
 \begin{equation}
-\label{eq:cont6}
+\label{eq:chevauchement}
 \forall r_i,r_j \in Rec : (a + \mathcal{X}(i) \leq c) \lor (c + \mathcal{X}(j) \leq a) \lor (b + \mathcal{Y}(i) \leq d) \lor (d + \mathcal{Y}(j) \leq b)
 \end{equation}
 
+\textbf{Limites}
+
+\begin{equation}
+\label{eq:limites}
+\forall r_i \in Rec : (a \geq 0) \land (b \geq 0) \land (a+\mathcal{X}(i) \leq m) \land (b + \mathcal{Y}(i) \leq n)
+\end{equation}
+
+\newpage
+
 \subsection{Question 2: Construction d'une formule en FNC telle que celle-ci est SAT ssi il existe $\mu$ correcte}
 
-Soit prop un cube de propositions de dimensions n,m et k tel que prop(a,b,i) est vrai si le rectangle $r_i$ a pour coin inférieur gauche le point (a,b).
+Soit prop un cube de propositions de dimensions n, m et k tel que prop(i,a,b) est vrai si le rectangle $r_i$ a pour coin inférieur gauche le point (a,b).
 
-Pour \eqref{eq:cont1} et \eqref{eq:cont5}: 
+\textbf{Unicité}
 
-$$C_1 : \bigwedge_{1 \leq i \leq k} ( \bigvee_{0 \leq a < m - X(i)}\;\; \bigvee_{0 \leq b < n - Y(i)} prop(a,b,i)) $$
+$$C_{1.1} : \bigwedge_{\substack{0 \leq a < n \\ 0 \leq b < m}}\; \bigwedge_{\substack{1 \leq i \leq k \\ 1 \leq j \leq k \\ i \neq j}} \neg prop(i,a,b) \lor \neg prop(j,a,b)$$
 
+$$C_{1.2} : \bigwedge_{\substack{1 \leq i \leq k \\ 0 \leq b < m}}\; \bigwedge_{\substack{0 \leq a < n \\ 0 \leq a2 < n \\ a \neq a2}} \neg prop(i,a,b) \lor \neg prop(i,a2,b)$$
 
-Pour \eqref{eq:cont6}:
+$$C_{1.3} : \bigwedge_{\substack{1 \leq i \leq k \\ 0 \leq a < n}}\; \bigwedge_{\substack{0 \leq b < m \\ 0 \leq b2 < m \\ b \neq b2}} \neg prop(i,a,b) \lor \neg prop(i,a,b2)$$
 
-Soit e tel que $a \leq e < a + X(i)$
+\begin{center}
+$$C_1: C_{1.1} \wedge C_{1.2} \wedge C_{1.3}$$
+\end{center}
 
-Soit f tel que $b \leq f < b + Y(i)$
+\textbf{Existence}
 
-$$prop(a,b,i) \Rightarrow \neg prop(e,b,j)$$
+$$C_2 : \bigwedge_{\substack{1 \leq i \leq k \\ 0 \leq a < n \\ 0 \leq b < m }} prop(i,a,b) $$
 
-$$prop(a,b,i) \Rightarrow \neg prop(a,f,j)$$
+\textbf{Chevauchement}
 
-Ces deux implications peuvent être traduites:
+$$C_3 : \bigwedge_{\substack{1 \leq i \leq k \\ 0 \leq a < n \\ 0 \leq b < m}}\;\; \bigwedge_{\substack{0 \leq da< a + X(i) \\ 0 \leq db < b + Y(i) \\ 1 \leq i2 \leq k}} \neg prop(i,a,b) \lor \neg prop(i2,a+da,b+db)$$
 
-$$\neg prop(a,b,i) \lor \neg prop(e,b,j)$$
+\textbf{Limites}
 
-$$\neg prop(a,b,i) \lor \neg prop(a,f,j)$$
+$$C_{4.1} : \bigwedge_{1 \leq i \leq k} \;\; \bigwedge_{\substack{(n-X(i)+1) \leq a < n \\ 0 \leq b < m}} \neg prop(i,a,b)$$
 
-$$C_{2} : \bigwedge_{\substack{1 \leq i \leq k \\ 1 \leq j \leq k \\ i \neq j}} \neg prop(a,b,i) \lor \neg prop(e,f,j)$$
+$$C_{4.2} : \bigwedge_{1 \leq i \leq k} \;\; \bigwedge_{\substack{(m-Y(i)+1) \leq b < m \\ 0 \leq a < n}} \neg prop(i,a,b)$$
+
+\begin{center}
+$$C_4: C_{4.1} \wedge C_{4.2}$$
+\end{center}
 
 
 \begin{center}
-$$FNC: C_1 \wedge C_2$$
+$$FNC: C_1 \wedge C_2 \wedge C_3 \wedge C_4$$
 \end{center}
+
+\newpage
 
 \subsection{Question 3: Implémentation et tests sur des exemples simples}
 
@@ -223,19 +249,5 @@ Donc, formellement:
 Soit $\mu(v) = (a,b,c)$ et $\mu(w) = (d,e,f)$
 
 $(f = c + \mathcal{Z}(v)) \land (d \geq a) \land (d+\mathcal{X}(w) \leq a+\mathcal{X}(v)) \land (e \geq b) \land(e+\mathcal{Y}(w) \leq b+\mathcal{Y}(v))$ 
-
-\section{Questions bonus}
-
-\subsection{Question 8: Pivotage d'un des rectangles}
-
-\subsection{Question 9: Introduction d'un minimum de contact entre les rectangles et les bords de R}
-
-$$ \sum_{\substack{\forall i \in k : a(i) = 0\\
-                \forall i \in k : b(i) = 0\\
-                \forall i \in k : a(i)+ X(i) = n\\
-                \forall i \in k : b(i)+ Y(i) = m }}
-SOMETHING $$
-
-\subsection{Question 10: Maximisation de ce contact avec MAX-SAT}
 
 \end{document}
