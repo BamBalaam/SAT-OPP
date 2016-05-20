@@ -19,7 +19,7 @@ public:
     std::cin >> n;
     std::cin >> m;
     while (i < k) {
-      std::cin >> i >> addY >> addX;
+      std::cin >> i >> addX >> addY;
       x.push_back(addX);
       y.push_back(addY);
     }
@@ -31,7 +31,7 @@ public:
 
   int const getX(size_t i) const { return x[i]; }
 
-  int const getY(size_t j) const { return x[j]; }
+  int const getY(size_t j) const { return y[j]; }
 
   size_t const getK() const { return k; }
 
