@@ -115,13 +115,11 @@
 
 Soit la largeur une dimension verticale et la longueur une dimension horizontale.
 
-Soit R un rectangle de largeur et longueur $n, m \in \mathbb{N}_{>0}$
+Soit R un rectangle de largeur et longueur $n, m \in \mathbb{N}_{>0}$.
 
-Soit Rec l'ensemble des petits rectangles à insérer dans R ( $\{ r_1, r_2, \ldots r_k \}$)
+Soit Rec l'ensemble des k rectangles à insérer dans R, chacun plus petit que R ( $\{ r_1, r_2, \ldots r_k \}$).
 
-Soit $\{r_1,\cdots,r_k\}$ un ensemble de k rectangles, chacun plus petit que R.
-
-Soient $\mathcal{X}$ et $\mathcal{Y}$ deux fonctions qui donnent la longueur et la largeur, respectivement, de chaque rectangle (contrairement à ce qui est dit dans l'énoncé, puisqu'une légère erreur s'est glissée dedans).
+Soient $\mathcal{X}$ et $\mathcal{Y}$ deux fonctions qui donnent la largeur et la longueur, respectivement, de chaque rectangle.
 
 \section{Questions}
 
@@ -140,7 +138,7 @@ Les contraintes sont les suivantes:
 
 \begin{equation}
 \label{eq:cont5}
-\forall r_i \in Rec : (a \geq 0) \land (b \geq 0) \land (a+\mathcal{X}(i) \leq m) \land (b + \mathcal{Y}(i) \leq n)
+\forall r_i \in Rec : (a \geq 0) \land (b \geq 0) \land (a \leq n - \mathcal{X}(i)) \land (b \leq m - \mathcal{Y}(i))
 \end{equation}
 
 \textbf{Les rectangles insérés ne peuvent pas se superposer}
@@ -188,7 +186,15 @@ $$FNC: C_1 \wedge C_2$$
 
 \subsection{Question 4: Si R est un carré, trouver la plus petite dimension de celui-ci admettant une solution pour des rectangles donnés}
 
+Soit R de dimensions $s \times s$.
+
+On incrémente depuis un s minimum qui est la plus grande largeur ou longueur du plus grand rectangle, jusqu'à trouver une solution valable.
+
+Une amélioration possible serait d'effectuer une recherche dichotomique entre ce s minimum et le s maximal possible qui serait la plus grande taille de tous les rectangles mis bout à bout sur la largeur ou longueur.
+
 \subsection{Question 5: Si R est un carré et n un entier donné, trouver la plus petite dimension de R admettant une solution pour des carrés de taille $i \times i$ pour tout $i \leq n$}
+
+Même chose que pour la question 4, mais avec création des carrés à insérer de tailles contenues entre 1 et n.
 
 \subsection{Question 6: Ajout d'une troisième dimension}
 
