@@ -98,7 +98,7 @@ void run(Grid &g, size_t size) {
       for (size_t n = 0; n < N; n++) {
         for (size_t m = 0; m < M; m++) {
           if (s.model[prop[k][n][m]] == l_True) {
-            std::cout << k + 1 << '\t' << m << '\t' << n << std::endl;
+            std::cout << k + 1 << '\t' << n << '\t' << m << std::endl;
           }
         }
       }
