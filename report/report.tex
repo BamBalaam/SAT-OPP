@@ -223,20 +223,22 @@ Deux fichiers reflètent l'implémentation, ``Grid.cpp'' et ``mainQ3.cpp''. Grid
 
 Pour tester le projet, il suffit de lancer les deux commandes suivantes:
 
+\begin{lstlisting}
 make Q3
-cat examples/<exemple à tester>.txt | ./a.out
+cat examples/<exemple a tester>.txt | ./a.out
+\end{lstlisting}
 
 Nous avons donc testé les deux exemples donnés 
 \begin{figure}[htb!]
 \centering
-\includegraphics[scale=0.55]{SAT-Simple}
+\includegraphics[scale=0.5]{SAT-Simple}
 \end{figure}
 
 Nous avons également testé un exemple plus complexe, nommé BENG06, pour lequel nous avons obtenu une réponse (affichée ici tronquée car la réponse comporte 40 lignes de données affichées).
 
 \begin{figure}[htb!]
 \centering
-\includegraphics[scale=0.5]{SAT-BENG06}
+\includegraphics[scale=0.45]{SAT-BENG06}
 \end{figure}
 
 \newpage
@@ -255,11 +257,30 @@ La question 5 étant une variante de la 4 seulement dans le format de l'input, n
 
 Même chose que pour la question 4, mais avec création des carrés à insérer de tailles contenues entre 1 et n.
 
-\subsection{Question 6: Ajout d'une troisième dimension}
+Pour le lancer, il suffit de lancer les commandes suivantes
+\begin{lstlisting}
+make Q5
+???
+\end{lstlisting}
 
-Les contraintes n'ont pas changé dans le fond, elles reflètent simplement l'ajout d'une dimension en plu
+Voici donc un exemple de solution:
+
+<SCREENSHOT HERE>
 
 \newpage
+
+\subsection{Question 6: Ajout d'une troisième dimension}
+
+Les contraintes n'ont pas changé dans le fond, elles reflètent simplement l'ajout d'une dimension en plus.
+
+Pour le lancer, même chose que pour la question 3, mais avec ``make Q6'' à la place. Bien sur, les fichiers à utiliser sont également différents puisque une dimension en plus doit être présente. Voici un screenshot du lancement de la résolution de cette question sur des variantes des exemples disponibles dans l'énoncé auxquels nous avons juste rajouté la troisième dimension.
+
+\begin{figure}[htb!]
+\centering
+\includegraphics[scale=0.50]{SAT-3D}
+\end{figure}
+
+ERREUR SCREENSHOT HERE!!!
 
 \subsection{Question 7: Contrainte - ne pas faire flotter des pavés droits dans l'espace}
 
