@@ -31,7 +31,7 @@ public:
 
   int const getX(size_t i) const { return x[i]; }
 
-  int const getY(size_t j) const { return x[j]; }
+  int const getY(size_t j) const { return y[j]; }
 
   size_t const getK() const { return k; }
 
